@@ -1,0 +1,45 @@
+################
+# Figures
+
+library(ggplot2)
+library(gganimate)
+
+setwd("~/Documents/hackfest/")
+
+scorePerTime <- readRDS("datasets/scorePerTime.example.rds")
+lista <- readRDS("~/Documents/hackfest/datasets/FINALDATA.rds")
+
+A = ggplot(scorePerTime, aes(x=time, y=itemScore, color=Tag)) + geom_line() +
+  theme_minimal() + theme(legend.position = "none", axis.title.x = element_text(size=16),
+                          axis.title.y = element_text(size=16),
+                          axis.text.x = element_text(size=12),
+                          axis.text.y = element_text(size=12)) +
+  xlab("Tempo") + ylab("Valor do item")
+
+png("figs/voting.simulation.itemSCore.png", width = 1000, height = 800)
+A
+dev.off()
+
+# A + geom_point(size=3) + transition_reveal(time) # Generate a animated figure
+
+B = ggplot(scorePerTime, aes(x=time, y=rank, color=Tag)) + geom_smooth(se=F) +
+  theme_minimal() + theme(legend.position = "none", axis.title.x = element_text(size=16),
+                          axis.title.y = element_text(size=16),
+                          axis.text.x = element_text(size=12),
+                          axis.text.y = element_text(size=12)) +
+  xlab("Tempo") + ylab("Rank")
+
+png("figs/voting.simulation.rank.png", width = 1000, height = 800)
+B
+dev.off()
+
+C = ggplot(scorePerTime, aes(x=time, y=log2(priorityScore+1), color=Tag)) + geom_smooth(se=F, size=0.3) +
+  theme_minimal() + theme(legend.position = "none", axis.title.x = element_text(size=16),
+                          axis.title.y = element_text(size=16),
+                          axis.text.x = element_text(size=12),
+                          axis.text.y = element_text(size=12)) +
+  xlab("Tempo") + ylab("Prioridade")
+
+png("figs/voting.simulation.priority.png", width = 1000, height = 800)
+C
+dev.off()
